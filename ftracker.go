@@ -50,7 +50,7 @@ func ShowTrainingInfo(action int, trainingType string, duration, weight, height 
 	case trainingType == "Бег":
 		distance := distance(action) // вызовите здесь необходимую функцию
 		speed := distance / duration // вызовите здесь необходимую функцию
-		calories := RunningSpentCalories(action, weight, duration, speed)
+		calories := RunningSpentCalories(action, weight, duration)
 		return fmt.Sprintf("Тип тренировки: %s\nДлительность: %.2f ч.\nДистанция: %.2f км.\nСкорость: %.2f км/ч\nСожгли калорий: %.2f\n", trainingType, duration, distance, speed, calories)
 	case trainingType == "Ходьба":
 		distance := distance(action)                                       // вызовите здесь необходимую функцию
@@ -80,7 +80,8 @@ const (
 // action int — количество совершенных действий(число шагов при ходьбе и беге, либо гребков при плавании).
 // weight float64 — вес пользователя.
 // duration float64 — длительность тренировки в часах.
-func RunningSpentCalories(action int, weight, duration, speed float64) float64 {
+func RunningSpentCalories(action int, weight, duration float64) float64 {
+	speed := distance(action) / duration
 	return ((runningCaloriesMeanSpeedMultiplier * speed * runningCaloriesMeanSpeedShift) * weight / mInKm * duration * minInH)
 }
 
